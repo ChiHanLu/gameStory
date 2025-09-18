@@ -1,0 +1,198 @@
+技術規格書（Technical Specification）
+1. 專案概述
+
+專案名稱：GameGuide Hub（遊戲攻略中心）
+版本：1.0
+目標：建構一個響應式前端網頁，用於介紹和瀏覽遊戲攻略。支援桌面、平板和行動裝置，預估每日活躍用戶 1,000 人以上。
+開發階段：
+
+規劃階段：1 週（需求確認、設計草圖）
+開發階段：4 週（前端實現、測試）
+測試階段：1 週（跨瀏覽器、效能測試）
+上線階段：1 週（部署、監控）
+
+
+假設後端：使用 RESTful API（如 Node.js 或 Firebase）提供攻略資料。無後端時，可用靜態 JSON 模擬。
+
+2. 技術棧
+
+前端框架：React.js（v18.x） + Next.js（v14.x） – 理由：支援伺服器端渲染（SSR）提升 SEO，熱重載加速開發。
+狀態管理：Zustand 或 Redux Toolkit – 用於管理搜尋狀態、用戶偏好。
+樣式框架：Tailwind CSS（v3.x） + Styled Components – Tailwind 快速佈局，Styled Components 動態樣式。
+UI 組件庫：Headless UI + Radix UI – 無樣式組件，確保無障礙（a11y）支援。
+路由：Next.js 內建路由 – 支援動態路由，如 /guide/[gameId]/[strategyId]。
+資料處理：
+
+Axios 或 Fetch API – API 呼叫。
+Lodash – 工具函數（如 debounce 搜尋）。
+
+
+建構工具：Vite（開發時） + Next.js 建構 – 快速打包。
+版本控制：Git + GitHub – 分支策略：main（生產）、develop（開發）、feature/*（功能分支）。
+測試工具：Jest + React Testing Library – 單元測試；Cypress – 端到端測試。
+部署：Vercel 或 Netlify – 自動 CI/CD，支援環境變數。
+其他：
+
+ESLint + Prettier – 程式碼風格。
+TypeScript – 強類型，提升開發效率。
+
+
+
+3. 功能模組
+網頁分為核心模組，每模組包含子功能、API 端點和互動邏輯。以下表格列出詳細規格：
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+模組名稱子功能詳細描述技術實現依賴 API/資料導航列 (Navigation Bar)- 首頁導航
+- 搜尋欄
+- 用戶登入/註冊按鈕
+- 語言切換（中/英）- 固定頂部，支援捲動隱藏。
+- 搜尋即時過濾攻略列表。
+- 登入後顯示用戶頭像和通知鈴鐺。- React 組件：NavBar.tsx
+- 使用 useState 管理搜尋狀態。
+- 整合 Next.js Link 路由。- GET /api/search?q=keyword
+- 用戶資料：localStorage 或 JWT token。首頁輪播 (Hero Banner)- 熱門遊戲輪播
+- 介紹文字 + CTA 按鈕（「探索攻略」）
+- 自動播放 + 手動控制- 顯示 3-5 張遊戲海報，點擊跳轉至攻略頁。
+- 支援無障礙：鍵盤導航、ARIA 標籤。- Swiper.js 輪播庫。
+- 組件：HeroCarousel.tsx
+- useEffect 處理自動播放。- GET /api/hot-games (返回 JSON: {id, title, image, description})。攻略列表 (Strategy List)- 遊戲分類過濾（e.g., FPS、RPG）
+- 分頁/無限滾動
+- 排序（最新、熱門、評分）
+- 卡片顯示：標題、縮圖、簡介、作者、日期- 每頁 12 張卡片，支援 hover 效果（放大、顯示更多）。
+- 行動裝置：垂直滾動，桌面：網格佈局。- React Infinite Scroll Component。
+- 組件：StrategyGrid.tsx
+- 使用 useMemo 快取排序結果。- GET /api/strategies?category=xxx&sort=hot&page=1
+- 資料結構：Array<{id: string, title: string, thumbnail: string, excerpt: string, author: {name: string}, createdAt: Date, rating: number}>。單一攻略詳情 (Strategy Detail)- 攻略內容渲染（Markdown）
+- 相關攻略推薦
+- 評論區（登入後發文）
+- 分享按鈕（社群、QR Code）
+- 收藏/讚好功能- 內容支援圖片、影片嵌入（YouTube）。
+- 評論即時更新（WebSocket 若有後端）。
+- 分享產生動態 URL。- React Markdown 渲染。
+- 組件：DetailView.tsx + CommentSection.tsx。
+- useMutation (React Query) 處理讚好/評論。- GET /api/strategy/:id (返回 {content: string, related: Array<strategy>})
+- POST /api/comments
+- 資料結構：{content: string (Markdown), tags: Array<string>, views: number, likes: number, comments: Array&#x3C;{user: string, text: string, date: Date}>}。</string></strategy>搜尋與過濾 (Search & Filter)- 全站搜尋
+- 進階過濾：難度、平台（PC/Mobile）
+- 搜尋歷史記錄- Debounce 輸入延遲 300ms。
+- 結果即時更新，無結果顯示「無相關攻略」。- Fuse.js 客戶端搜尋（若無後端）。
+- 組件：SearchModal.tsx
+- localStorage 儲存歷史。- GET /api/search/advanced?filters={json}用戶個人頁 (User Profile)- 我的收藏
+- 發佈攻略
+- 編輯個人資料
+- 通知中心- 僅登入用戶可見。
+- 上傳圖片支援拖拉。- Formik + Yup 表單驗證。
+- 組件：ProfileDashboard.tsx- GET /api/user/:id/favorites
+- POST /api/strategies (上傳新攻略)底部版權 (Footer)- 連結：關於我們、隱私政策、聯絡
+- 社群連結（X、Discord）
+- 版權資訊- 靜態內容，支援多語言。- 簡單 React 組件：Footer.tsx- 無 API，硬編碼或 CMS。
+4. 資料結構與 API 規格
+
+核心資料模型（JSON Schema）：
+json{
+  "Game": {
+    "id": "string",
+    "title": "string",
+    "thumbnail": "string (URL)",
+    "description": "string",
+    "tags": ["array<string>"]
+  },
+  "Strategy": {
+    "id": "string",
+    "gameId": "string",
+    "title": "string",
+    "content": "string (Markdown)",
+    "authorId": "string",
+    "rating": "number (0-5)",
+    "views": "number",
+    "createdAt": "string (ISO Date)"
+  }
+}
+
+錯誤處理：全站使用 Error Boundary (React)，顯示友好訊息（如「載入失敗，請重試」）。HTTP 錯誤碼：401（未登入）→ 跳轉登入頁；500 → 顯示系統錯誤。
+效能優化：
+
+圖片：使用 Next.js Image 組件，lazy loading + WebP 格式。
+快取：React Query 快取 API 回應 5 分鐘。
+Bundle 大小：目標 < 500KB，壓縮 CSS/JS。
+Lighthouse 分數：目標 95+（效能、SEO、無障礙）。
+
+
+
+5. 安全性與無障礙
+
+安全性：XSS 防護（React 內建），CORS 設定，環境變數隱藏 API 金鑰。
+無障礙 (a11y)：WCAG 2.1 AA 等級 – 語意 HTML、Alt 文字、鍵盤導航、螢幕閱讀器支援（ARIA roles）。
+跨瀏覽器：Chrome 90+、Firefox 85+、Safari 14+、Edge 90+。
+
+6. 開發與測試計劃
+
+任務分解（使用 Jira 或 Trello）：
+
+Week 1: 設定專案、建置導航與首頁。
+Week 2: 攻略列表與搜尋。
+Week 3: 詳情頁與用戶模組。
+Week 4: 優化、整合測試。
+
+
+測試覆蓋率：80% 單元測試，100% 關鍵路徑 E2E 測試。
+文件：README.md（安裝指南）、API 文檔（Swagger）。

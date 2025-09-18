@@ -128,25 +128,157 @@ function SearchPageContent() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      {/* 搜尋區域 */}
-      <div className="bg-white dark:bg-gray-800 shadow-sm border-b dark:border-gray-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          {/* 主搜尋框 */}
-          <form onSubmit={handleSearch} className="mb-6">
-            <div className="relative max-w-2xl mx-auto">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" />
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-900 dark:to-gray-800">
+      {/* Hero Section */}
+      <div className="bg-gradient-to-r from-primary-500 via-secondary-500 to-accent-500 text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div className="text-center max-w-4xl mx-auto">
+            <h1 className="text-5xl font-bold mb-6">
+              🔍 搜尋遊戲攻略
+            </h1>
+            <p className="text-xl mb-8 opacity-90 leading-relaxed">
+              找到你需要的遊戲攻略，從基礎教學到高階技巧，
+              數千篇專業攻略等你探索
+            </p>
+            
+            {/* Enhanced Search Bar */}
+            <div className="max-w-2xl mx-auto">
+              <form onSubmit={handleSearch} className="relative">
+                <div className="relative">
+                  <MagnifyingGlassIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-400" />
+                  <input
+                    type="text"
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    placeholder="搜尋攻略、遊戲名稱、標籤..."
+                    className="w-full pl-12 pr-20 py-4 text-lg rounded-xl border-0 bg-white/90 backdrop-blur-sm focus:ring-4 focus:ring-white/30 focus:bg-white text-gray-900 placeholder-gray-500"
+                  />
+                  <button
+                    type="submit"
+                    className="absolute right-2 top-1/2 transform -translate-y-1/2 px-6 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-colors font-medium"
+                  >
+                    搜尋
+                  </button>
+                </div>
+              </form>
+              
+              {/* Quick Search Tags */}
+              <div className="mt-6 flex flex-wrap justify-center gap-3">
+                <span className="text-sm opacity-80">熱門搜尋：</span>
+                {['英雄聯盟', 'Genshin Impact', '薩爾達', 'Valorant', 'Minecraft'].map(tag => (
+                  <button
+                    key={tag}
+                    onClick={() => handleQuickSearch(tag)}
+                    className="px-3 py-1 bg-white/20 rounded-full text-sm hover:bg-white/30 transition-colors"
+                  >
+                    {tag}
+                  </button>
+                ))}
               </div>
-              <input
-                type="text"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="搜尋攻略、遊戲或標籤..."
-                className="block w-full pl-10 pr-3 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-              />
             </div>
-          </form>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        
+        {/* Search Tips */}
+        {!query && (
+          <div className="mb-12 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-xl p-8">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">
+              🎯 搜尋小技巧
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="text-center">
+                <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <span className="text-white text-xl">🔤</span>
+                </div>
+                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">關鍵字搜尋</h3>
+                <p className="text-sm text-gray-600 dark:text-neutral-400">
+                  輸入遊戲名稱、攻略類型或特定技巧關鍵字
+                </p>
+              </div>
+              <div className="text-center">
+                <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <span className="text-white text-xl">🏷️</span>
+                </div>
+                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">標籤篩選</h3>
+                <p className="text-sm text-gray-600 dark:text-neutral-400">
+                  使用標籤快速找到特定類型的攻略內容
+                </p>
+              </div>
+              <div className="text-center">
+                <div className="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <span className="text-white text-xl">📊</span>
+                </div>
+                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">排序選項</h3>
+                <p className="text-sm text-gray-600 dark:text-neutral-400">
+                  按相關性、時間、熱度等條件排序結果
+                </p>
+              </div>
+              <div className="text-center">
+                <div className="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <span className="text-white text-xl">⚡</span>
+                </div>
+                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">進階篩選</h3>
+                <p className="text-sm text-gray-600 dark:text-neutral-400">
+                  根據難度等級和遊戲類型精確篩選
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Filters and Sorting */}
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 mb-8">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <div className="flex items-center gap-4">
+              <button
+                onClick={() => setShowFilters(!showFilters)}
+                className="flex items-center gap-2 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+              >
+                <FunnelIcon className="h-4 w-4" />
+                篩選器
+                {(filters.game || filters.difficulty || filters.category) && (
+                  <span className="ml-1 px-2 py-0.5 text-xs bg-primary-500 text-white rounded-full">
+                    {[filters.game, filters.difficulty, filters.category].filter(Boolean).length}
+                  </span>
+                )}
+              </button>
+              
+              {(filters.game || filters.difficulty || filters.category) && (
+                <button
+                  onClick={clearFilters}
+                  className="text-sm text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+                >
+                  清除篩選
+                </button>
+              )}
+            </div>
+
+            <div className="flex items-center gap-4">
+              {query && (
+                <span className="text-sm text-gray-600 dark:text-neutral-400">
+                  找到 <span className="font-semibold text-primary-500">{results.length}</span> 個結果
+                </span>
+              )}
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-gray-500">排序:</span>
+                <select
+                  value={filters.sortBy}
+                  onChange={(e) => setFilters({ ...filters, sortBy: e.target.value })}
+                  className="px-3 py-1 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-sm"
+                >
+                  <option value="relevance">相關性</option>
+                  <option value="newest">最新</option>
+                  <option value="oldest">最舊</option>
+                  <option value="likes">最多讚</option>
+                  <option value="views">最多觀看</option>
+                </select>
+              </div>
+            </div>
+          </div>
 
           {/* 篩選器和排序 */}
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">

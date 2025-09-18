@@ -78,16 +78,66 @@ export default function CreateStrategyPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* 頁面標題 */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-            發佈新攻略
-          </h1>
-          <p className="text-gray-600 dark:text-gray-400">
-            分享您的遊戲心得與攻略技巧
-          </p>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-900 dark:to-gray-800">
+      {/* Hero Section */}
+      <div className="bg-gradient-to-r from-primary-500 via-secondary-500 to-accent-500 text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="text-center">
+            <h1 className="text-4xl font-bold mb-4">
+              ✍️ 創作你的遊戲攻略
+            </h1>
+            <p className="text-xl opacity-90 max-w-2xl mx-auto leading-relaxed">
+              分享你的遊戲心得與專業技巧，幫助其他玩家提升遊戲水平，
+              成為遊戲社群中受人尊敬的攻略達人
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Tips Section */}
+        <div className="mb-12 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-xl p-8">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">
+            💡 攻略創作小貼士
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="text-center">
+              <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                <span className="text-white text-xl">📝</span>
+              </div>
+              <h3 className="font-semibold text-gray-900 dark:text-white mb-2">清晰標題</h3>
+              <p className="text-sm text-gray-600 dark:text-neutral-400">
+                使用具體且吸引人的標題，讓讀者一眼就知道攻略內容
+              </p>
+            </div>
+            <div className="text-center">
+              <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                <span className="text-white text-xl">📸</span>
+              </div>
+              <h3 className="font-semibold text-gray-900 dark:text-white mb-2">豐富圖片</h3>
+              <p className="text-sm text-gray-600 dark:text-neutral-400">
+                添加螢幕截圖和說明圖片，讓攻略更加直觀易懂
+              </p>
+            </div>
+            <div className="text-center">
+              <div className="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                <span className="text-white text-xl">🎯</span>
+              </div>
+              <h3 className="font-semibold text-gray-900 dark:text-white mb-2">詳細步驟</h3>
+              <p className="text-sm text-gray-600 dark:text-neutral-400">
+                提供清晰的步驟說明，讓新手也能輕鬆跟隨
+              </p>
+            </div>
+            <div className="text-center">
+              <div className="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                <span className="text-white text-xl">🏷️</span>
+              </div>
+              <h3 className="font-semibold text-gray-900 dark:text-white mb-2">準確標籤</h3>
+              <p className="text-sm text-gray-600 dark:text-neutral-400">
+                使用相關標籤讓更多需要的玩家能找到你的攻略
+              </p>
+            </div>
+          </div>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-8">

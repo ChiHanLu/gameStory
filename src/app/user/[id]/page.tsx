@@ -73,17 +73,21 @@ export default function UserProfilePage() {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      {/* Hero Background */}
+      <div className="bg-gradient-to-r from-primary-500 via-secondary-500 to-accent-500 h-48"></div>
+      
       {/* 用戶資料頭部 */}
-      <div className="bg-white dark:bg-gray-800 shadow">
+      <div className="bg-white dark:bg-gray-800 shadow-xl -mt-24 relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex flex-col sm:flex-row gap-6">
             {/* 頭像 */}
-            <div className="flex-shrink-0">
+            <div className="flex-shrink-0 relative">
               <img
                 src={profileUser.avatar}
                 alt={profileUser.name}
-                className="w-32 h-32 rounded-full object-cover border-4 border-white dark:border-gray-700 shadow-lg"
+                className="w-40 h-40 rounded-full object-cover border-6 border-white dark:border-gray-700 shadow-2xl"
               />
+              <div className="absolute bottom-2 right-2 w-6 h-6 bg-green-500 border-2 border-white rounded-full"></div>
             </div>
             
             {/* 用戶資訊 */}
@@ -123,25 +127,65 @@ export default function UserProfilePage() {
               </div>
               
               {/* 統計數據 */}
-              <div className="mt-6 grid grid-cols-3 gap-6">
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-gray-900 dark:text-white">
+              <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div className="text-center p-4 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 rounded-xl">
+                  <div className="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center mx-auto mb-2">
+                    <span className="text-white text-lg">📚</span>
+                  </div>
+                  <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
                     {formatNumber(profileUser.stats.strategiesCount)}
                   </div>
-                  <div className="text-sm text-gray-500 dark:text-gray-400">攻略數</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-400 font-medium">攻略數</div>
                 </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-gray-900 dark:text-white">
+                <div className="text-center p-4 bg-gradient-to-br from-red-50 to-red-100 dark:from-red-900/20 dark:to-red-800/20 rounded-xl">
+                  <div className="w-10 h-10 bg-red-500 rounded-lg flex items-center justify-center mx-auto mb-2">
+                    <span className="text-white text-lg">❤️</span>
+                  </div>
+                  <div className="text-2xl font-bold text-red-600 dark:text-red-400">
                     {formatNumber(profileUser.stats.likesReceived)}
                   </div>
-                  <div className="text-sm text-gray-500 dark:text-gray-400">獲得讚數</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-400 font-medium">獲得讚數</div>
                 </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-gray-900 dark:text-white">
+                <div className="text-center p-4 bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 rounded-xl">
+                  <div className="w-10 h-10 bg-green-500 rounded-lg flex items-center justify-center mx-auto mb-2">
+                    <span className="text-white text-lg">👥</span>
+                  </div>
+                  <div className="text-2xl font-bold text-green-600 dark:text-green-400">
                     {formatNumber(profileUser.stats.followersCount)}
                   </div>
-                  <div className="text-sm text-gray-500 dark:text-gray-400">粉絲數</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-400 font-medium">粉絲數</div>
                 </div>
+                <div className="text-center p-4 bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20 rounded-xl">
+                  <div className="w-10 h-10 bg-purple-500 rounded-lg flex items-center justify-center mx-auto mb-2">
+                    <span className="text-white text-lg">👁️</span>
+                  </div>
+                  <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">
+                    {formatNumber(userStrategies.reduce((sum, s) => sum + s.views, 0))}
+                  </div>
+                  <div className="text-sm text-gray-600 dark:text-gray-400 font-medium">總觀看數</div>
+                </div>
+              </div>
+              
+              {/* Achievement Badges */}
+              <div className="mt-6 flex flex-wrap gap-2">
+                {profileUser.stats.strategiesCount >= 10 && (
+                  <span className="px-3 py-1 bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400 rounded-full text-xs font-medium">
+                    🏆 攻略達人
+                  </span>
+                )}
+                {profileUser.stats.likesReceived >= 100 && (
+                  <span className="px-3 py-1 bg-pink-100 text-pink-800 dark:bg-pink-900/30 dark:text-pink-400 rounded-full text-xs font-medium">
+                    💖 人氣作者
+                  </span>
+                )}
+                {profileUser.stats.followersCount >= 50 && (
+                  <span className="px-3 py-1 bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400 rounded-full text-xs font-medium">
+                    🌟 知名玩家
+                  </span>
+                )}
+                <span className="px-3 py-1 bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400 rounded-full text-xs font-medium">
+                  ✅ 活躍用戶
+                </span>
               </div>
             </div>
           </div>
