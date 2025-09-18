@@ -138,7 +138,7 @@ export default function CommunityPage() {
 
   // 篩選和排序討論
   const filteredDiscussions = useMemo(() => {
-    let filtered = mockDiscussions.filter(discussion => {
+    const filtered = mockDiscussions.filter(discussion => {
       const matchesCategory = selectedCategory === 'all' || discussion.category === selectedCategory;
       const matchesSearch = !searchQuery || 
         discussion.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -335,7 +335,7 @@ export default function CommunityPage() {
                 </div>
                 <select
                   value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value as any)}
+                  onChange={(e) => setSortBy(e.target.value as 'latest' | 'hot' | 'replies' | 'views')}
                   className="px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                 >
                   <option value="hot">熱門排序</option>
