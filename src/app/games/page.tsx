@@ -1,18 +1,13 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { Metadata } from 'next';
 import Link from 'next/link';
 import { 
   FunnelIcon, 
   MagnifyingGlassIcon, 
   PlayIcon,
-  StarIcon,
-  EyeIcon,
-  UserGroupIcon,
-  CalendarIcon,
   ChevronRightIcon,
-  GamepadIcon
+  DevicePhoneMobileIcon
 } from '@heroicons/react/24/outline';
 import { mockGames } from '@/data/mock';
 import { GameCategory, Platform } from '@/types';
@@ -44,7 +39,7 @@ export default function GamesPage() {
 
   // 篩選和排序遊戲
   const filteredGames = useMemo(() => {
-    let filtered = mockGames.filter(game => {
+    const filtered = mockGames.filter(game => {
       const matchesSearch = !searchQuery || 
         game.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         game.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -228,7 +223,7 @@ export default function GamesPage() {
 
                 <select
                   value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value as any)}
+                  onChange={(e) => setSortBy(e.target.value as 'popularity' | 'newest' | 'rating' | 'name')}
                   className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                 >
                   <option value="popularity">人氣排序</option>
@@ -258,7 +253,7 @@ export default function GamesPage() {
               </span>
               {searchQuery && (
                 <span className="text-sm text-gray-500">
-                  搜尋: "{searchQuery}"
+                  搜尋: &ldquo;{searchQuery}&rdquo;
                 </span>
               )}
             </div>
@@ -340,7 +335,7 @@ export default function GamesPage() {
             </div>
           ) : (
             <div className="text-center py-16">
-              <GamepadIcon className="mx-auto h-16 w-16 text-gray-400 mb-4" />
+              <DevicePhoneMobileIcon className="mx-auto h-16 w-16 text-gray-400 mb-4" />
               <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
                 找不到相關遊戲
               </h3>
